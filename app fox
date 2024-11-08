@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.2">
+    <title>Gerador de Links Aleatórios do YouTube</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            width: 80%;
+        }
+
+        iframe {
+            display: block;
+            margin: 10px auto;
+            width: 560px;
+            height: 315px;
+            border: none;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Vídeos Aleatórios do YouTube</h1>
+        <button onclick="startGeneratingVideos()">Começar a Gerar Vídeos</button>
+        <div id="videos-container"></div>
+    </div>
+    <script>
+        function getRandomString(length) {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            return result;
+        }
+
+        function getRandomYouTubeLink() {
+            const randomString = getRandomString(11); // IDs do YouTube têm 11 caracteres
+            return `https://www.youtube.com/embed/${randomString}`;
+        }
+
+        function addRandomVideos() {
+            const container = document.getElementById('videos-container');
+            for (let i = 0; i < 10; i++) {
+                const iframe = document.createElement('iframe');
+                iframe.src = getRandomYouTubeLink();
+                container.appendChild(iframe);
+            }
+        }
+
+        function startGeneratingVideos() {
+            const container = document.getElementById('videos-container');
+            container.innerHTML = ''; // Limpa os vídeos anteriores
+            let count = 0;
+            const interval = setInterval(() => {
+                if (count >= 1000) {
+                    clearInterval(interval);
+                } else {
+                    addRandomVideos();
+                    count += 10;
+                }
+            }, 10000); // Adiciona 10 vídeos a cada 10 segundos
+        }
+    </script>
+</body>
+</html>
